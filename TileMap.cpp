@@ -30,6 +30,9 @@ void TileMap::initMap()
 
 void TileMap::updateMap(sf::RenderWindow* window)
 {
+
+
+    //User Controls ----------------------------------------------------------------------------------
     int counter = 3;
 
     sf::Vector2f worldPos = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
@@ -97,6 +100,9 @@ void TileMap::updateMap(sf::RenderWindow* window)
             }
         }
     }
+
+    //Update All Tile Physics
+
     int vectorCounter = 0;
     int finalCount = 0;
     // Water Tile Update Physics-----------------------------------------------------------------------------------------------------------------------------------
@@ -219,70 +225,10 @@ void TileMap::updateMap(sf::RenderWindow* window)
         }
         
 
-
-
-        /*
-       
-        else if (mapArray[x][y - 1] == 'S' && rand() % 10 + 1 <= 3) {
-            int deleteSand = 0;
-            for (auto& elementToCompare : sandVector) {
-                if (elementToCompare.xCord == x && elementToCompare.yCord == y - 1) {
-
-                    mapArray[x][y - 1] = 'F';
-                    FireTile temp;
-                    temp.xCord = x;
-                    temp.yCord = y - 1;
-                    fireVector.push_back(temp);
-
-                    break;
-                }
-                deleteSand++;
-            }
-            sandVector.erase(sandVector.begin() + deleteSand);
-
-        }
-        else if (mapArray[x - 1][y] == 'S' && rand() % 10 + 1 <= 3) {
-            int deleteSand = 0;
-            for (auto& elementToCompare : sandVector) {
-                if (elementToCompare.xCord == x - 1 && elementToCompare.yCord == y) {
-                    FireTile temp;
-
-                    mapArray[x - 1][y] = 'F';
-                    temp.xCord = x - 1;
-                    temp.yCord = y;
-                    fireVector.push_back(temp);
-
-                    break;
-                }
-                deleteSand++;
-            }
-            sandVector.erase(sandVector.begin() + deleteSand);
-
-        }
-        else if (mapArray[x + 1][y] == 'S' && rand() % 10 + 1 <= 3) {
-        int deleteSand = 0;
-        for (auto& elementToCompare : sandVector) {
-            if (elementToCompare.xCord == x + 1 && elementToCompare.yCord == y) {
-
-                mapArray[x + 1][y] = 'F';
-                FireTile temp;
-                temp.xCord = x + 1;
-                temp.yCord = y;
-                fireVector.push_back(temp);
-
-                break;
-            }
-            deleteSand++;
-        }
-        sandVector.erase(sandVector.begin() + deleteSand);
-
-        }
-        */
     }
 
     
-   // std::cout << fireVector.size() << "\n";
-    //Insane Fire Delete holy Crap....
+    //Fire Delete
     if (finalCount != 0) {
         Tile temp;
         temp = fireVector.at((fireVector.size() - finalCount));
@@ -540,63 +486,7 @@ void TileMap::updateMap(sf::RenderWindow* window)
         if (fireSpread) {
             break;
         }
-        /*
 
-        else if (mapArray[x][y - 1] == 'S' && rand() % 10 + 1 <= 3) {
-            int deleteSand = 0;
-            for (auto& elementToCompare : sandVector) {
-                if (elementToCompare.xCord == x && elementToCompare.yCord == y - 1) {
-
-                    mapArray[x][y - 1] = 'F';
-                    FireTile temp;
-                    temp.xCord = x;
-                    temp.yCord = y - 1;
-                    fireVector.push_back(temp);
-
-                    break;
-                }
-                deleteSand++;
-            }
-            sandVector.erase(sandVector.begin() + deleteSand);
-
-        }
-        else if (mapArray[x - 1][y] == 'S' && rand() % 10 + 1 <= 3) {
-            int deleteSand = 0;
-            for (auto& elementToCompare : sandVector) {
-                if (elementToCompare.xCord == x - 1 && elementToCompare.yCord == y) {
-                    FireTile temp;
-
-                    mapArray[x - 1][y] = 'F';
-                    temp.xCord = x - 1;
-                    temp.yCord = y;
-                    fireVector.push_back(temp);
-
-                    break;
-                }
-                deleteSand++;
-            }
-            sandVector.erase(sandVector.begin() + deleteSand);
-
-        }
-        else if (mapArray[x + 1][y] == 'S' && rand() % 10 + 1 <= 3) {
-        int deleteSand = 0;
-        for (auto& elementToCompare : sandVector) {
-            if (elementToCompare.xCord == x + 1 && elementToCompare.yCord == y) {
-
-                mapArray[x + 1][y] = 'F';
-                FireTile temp;
-                temp.xCord = x + 1;
-                temp.yCord = y;
-                fireVector.push_back(temp);
-
-                break;
-            }
-            deleteSand++;
-        }
-        sandVector.erase(sandVector.begin() + deleteSand);
-
-        }
-        */
     }
     if (fireSpread) {
         mapArray[tempFire.xCord][tempFire.yCord] = 'F';
@@ -618,22 +508,7 @@ void TileMap::updateMap(sf::RenderWindow* window)
 
 void TileMap::drawMap(sf::RenderWindow* window)
 {
-    /*
-    for (int i = 0; i <= 20; i++) {
 
-        for (int j = 0; j <= 20; j++) {
-            std::cout << mapArray[j][i] << " ";
-
-
-
-
-        }
-        std::cout << "\n";
-
-    }
-
-
-        */
     for (auto& element : waterVector) {
         
         element.tile.setPosition(sf::Vector2f(element.xCord * tile.getTileSize(), element.yCord * tile.getTileSize()));
