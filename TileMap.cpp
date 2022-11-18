@@ -99,17 +99,7 @@ void TileMap::updateUserInput(sf::RenderWindow* window) {
 
 }
 
-
-
-
-
-void TileMap::updateMap(sf::RenderWindow* window)
-{
-
-    updateUserInput(window);
-
-
-    //Update All Tile Physics
+void TileMap::updateWaterTilePysics(sf::RenderWindow* window) {
 
     int vectorCounter = 0;
     int finalCount = 0;
@@ -124,40 +114,40 @@ void TileMap::updateMap(sf::RenderWindow* window)
         }
 
         vectorCounter++;
-        
-            if (mapArray[x][y + 1] == ' ') {
-                mapArray[x][y + 1] = '#';
-                mapArray[x][y] = ' ';
-                element.yCord += 1;
-            }
-        
-            else if (mapArray[x - 1][y] == ' ' && mapArray[x + 1][y] == ' ') {
-                if (rand() % 2 + 1 == 2) {
-                    mapArray[x - 1][y] = '#';
-                    mapArray[x][y] = ' ';
-                    element.xCord--;
 
-                }
-                else {
-                    mapArray[x + 1][y] = '#';
-                    mapArray[x][y] = ' ';
-                    element.xCord++;
+        if (mapArray[x][y + 1] == ' ') {
+            mapArray[x][y + 1] = '#';
+            mapArray[x][y] = ' ';
+            element.yCord += 1;
+        }
 
-                }
-
-            }
-            else if (mapArray[x - 1][y] == ' ') {
+        else if (mapArray[x - 1][y] == ' ' && mapArray[x + 1][y] == ' ') {
+            if (rand() % 2 + 1 == 2) {
                 mapArray[x - 1][y] = '#';
                 mapArray[x][y] = ' ';
-                element.xCord -= 1;
+                element.xCord--;
 
             }
-            else if (mapArray[x + 1][y] == ' ') {
+            else {
                 mapArray[x + 1][y] = '#';
                 mapArray[x][y] = ' ';
-                element.xCord += 1;
+                element.xCord++;
 
             }
+
+        }
+        else if (mapArray[x - 1][y] == ' ') {
+            mapArray[x - 1][y] = '#';
+            mapArray[x][y] = ' ';
+            element.xCord -= 1;
+
+        }
+        else if (mapArray[x + 1][y] == ' ') {
+            mapArray[x + 1][y] = '#';
+            mapArray[x][y] = ' ';
+            element.xCord += 1;
+
+        }
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
@@ -170,10 +160,27 @@ void TileMap::updateMap(sf::RenderWindow* window)
         }
     }
 
+}
 
 
-    vectorCounter = 0;
-    finalCount = 0;
+
+
+void TileMap::updateMap(sf::RenderWindow* window)
+{
+    //User Controls ----------------------------------------------------------------------------------
+
+    updateUserInput(window);
+
+
+    //Update All Tile Physics
+
+    // Update Water Tile Pysics
+    updateWaterTilePysics(window);
+
+
+
+    int vectorCounter = 0;
+    int finalCount = 0;
 
 
     // Fire Tile Update Physics-----------------------------------------------------------------------------------------------------------------------------------
