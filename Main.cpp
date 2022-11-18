@@ -1,7 +1,6 @@
 /**
 Main.cpp
-Recursive Tree Generation
-Author: Henry Bryant
+Particle simulator Author: Henry Bryant
 
 */
 #include "Game.h"

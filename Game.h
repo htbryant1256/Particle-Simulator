@@ -4,29 +4,33 @@
 #include "SFML/Window.hpp"
 #include "SFML/System.hpp"
 #include "SFML/Network.hpp"
-#include "BranchingStructure.h"
 #include <iostream>
+#include "TileMap.h"
 
 class Game
 {
+
 private:
+
 	//Objects
 	sf::RenderWindow* window;
 	sf::Event ev;
 	sf::VideoMode videoMode;
 
 	//Objects From Headers
-	BranchingStructure branchingStructure;
+	TileMap tileMap;
 
 	//Private Variables
 	int windowHeight;
 	int windowWidth;
+
 
 	//Private Functions
 	void initVariables();
 	void initWindow();
 
 public:
+
 	sf::View view;
 
 	//Constructors
@@ -37,6 +41,7 @@ public:
 	void update();
 	void render();
 	bool isRunning();
+
 };
 
 #endif
