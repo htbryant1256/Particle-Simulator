@@ -101,19 +101,13 @@ void TileMap::updateUserInput(sf::RenderWindow* window) {
 
 void TileMap::updateWaterTilePhysics(sf::RenderWindow* window) {
 
-    int vectorCounter = 0;
-    int finalCount = 0;
+
     // Water Tile Update Physics-----------------------------------------------------------------------------------------------------------------------------------
     for (auto& element : waterVector) {
         int x = element.xCord;
         int y = element.yCord;
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && mouseCursor.getGlobalBounds().contains(sf::Vector2f(element.xCord * tile.getTileSize(), element.yCord * tile.getTileSize()))) {
-            finalCount = vectorCounter;
 
-        }
-
-        vectorCounter++;
 
         if (mapArray[x][y + 1] == ' ') {
             mapArray[x][y + 1] = '#';
@@ -155,7 +149,6 @@ void TileMap::updateWaterTilePhysics(sf::RenderWindow* window) {
 void TileMap::updateFireTilePhysics(sf::RenderWindow* window) {
     int vectorCounter = 0;
     int finalCount = 0;
-
 
     // Fire Tile Update Physics-----------------------------------------------------------------------------------------------------------------------------------
     for (auto& element : fireVector) {
@@ -213,11 +206,9 @@ void TileMap::updateFireTilePhysics(sf::RenderWindow* window) {
 
         }
 
-
     }
 
-
-    //Fire Delete
+    //Fire Delete ------------------------------------------------------------
     if (finalCount != 0) {
         Tile temp;
         temp = fireVector.at((fireVector.size() - finalCount));
@@ -242,14 +233,13 @@ void TileMap::updateFireTilePhysics(sf::RenderWindow* window) {
     finalCount = 0;
 
 
-
     FireTile tempFire;
     bool fireSpread = false;
-    // Fire Tile Update Physics-----------------------------------------------------------------------------------------------------------------------------------
+
+    // Fire Tile Spread Physics-----------------------------------------------------------------------------------------------------------------------------------
     for (auto& element : fireVector) {
         int x = element.xCord;
         int y = element.yCord;
-
 
         finalCount = vectorCounter;
 
@@ -259,15 +249,12 @@ void TileMap::updateFireTilePhysics(sf::RenderWindow* window) {
             int deleteSand = 0;
             for (auto& elementToCompare : sandVector) {
                 if (elementToCompare.xCord == x && elementToCompare.yCord == y + 1) {
-                    //THIS IS WRONG IDK WHY
                     mapArray[x][y + 1] = 'F';
                     mapArray[x][y] = 'F';
-                    //---------------------------------------------------
 
                     tempFire.xCord = x;
                     tempFire.yCord = y + 1;
                     fireSpread = true;
-                    //replace second break with delete vector?
                     break;
                 }
                 deleteSand++;
@@ -281,15 +268,12 @@ void TileMap::updateFireTilePhysics(sf::RenderWindow* window) {
             int deleteSand = 0;
             for (auto& elementToCompare : sandVector) {
                 if (elementToCompare.xCord == x && elementToCompare.yCord == y - 1) {
-                    //THIS IS WRONG IDK WHY
                     mapArray[x][y - 1] = 'F';
                     mapArray[x][y] = 'F';
-                    //---------------------------------------------------
 
                     tempFire.xCord = x;
                     tempFire.yCord = y - 1;
                     fireSpread = true;
-                    //replace second break with delete vector?
                     break;
                 }
                 deleteSand++;
@@ -303,21 +287,16 @@ void TileMap::updateFireTilePhysics(sf::RenderWindow* window) {
             int deleteSand = 0;
             for (auto& elementToCompare : sandVector) {
                 if (elementToCompare.xCord == x - 1 && elementToCompare.yCord == y) {
-                    //THIS IS WRONG IDK WHY
                     mapArray[x - 1][y] = 'F';
                     mapArray[x][y] = 'F';
-                    //---------------------------------------------------
-
                     tempFire.xCord = x - 1;
                     tempFire.yCord = y;
                     fireSpread = true;
-                    //replace second break with delete vector?
                     break;
                 }
                 deleteSand++;
 
             }
-
             sandVector.erase(sandVector.begin() + deleteSand);
 
         }
@@ -326,23 +305,16 @@ void TileMap::updateFireTilePhysics(sf::RenderWindow* window) {
 
             for (auto& elementToCompare : sandVector) {
                 if (elementToCompare.xCord == x + 1 && elementToCompare.yCord == y) {
-                    //THIS IS WRONG IDK WHY
                     mapArray[x + 1][y] = ' ';
                     mapArray[x][y] = 'F';
-                    //---------------------------------------------------
-
                     tempFire.xCord = x + 1;
                     tempFire.yCord = y;
                     fireSpread = true;
-                    //replace second break with delete vector?
                     break;
                 }
                 deleteSand++;
-
             }
-
             sandVector.erase(sandVector.begin() + deleteSand);
-
         }
 
 
@@ -363,17 +335,10 @@ void TileMap::updateFireTilePhysics(sf::RenderWindow* window) {
 }
 
 void TileMap::updateSandTilePhysics(sf::RenderWindow* window) {
-    int vectorCounter = 0;
-    int finalCount = 0;
+
     // Sand Tile Update Physics-----------------------------------------------------------------------------------------------------------------------------------
     for (auto& element : sandVector) {
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && mouseCursor.getGlobalBounds().contains(sf::Vector2f(element.xCord * tile.getTileSize(), element.yCord * tile.getTileSize()))) {
-            finalCount = vectorCounter;
-
-        }
-
-        vectorCounter++;
 
         int x = element.xCord;
         int y = element.yCord;
@@ -465,45 +430,8 @@ void TileMap::updateSandTilePhysics(sf::RenderWindow* window) {
 
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-        if (finalCount != 0) {
-            Tile temp;
-            temp = sandVector.at(finalCount);
-            mapArray[temp.xCord][temp.yCord] = ' ';
-            sandVector.erase(sandVector.begin() + finalCount);
 
-        }
-    }
 }
-
-
-
-
-
-
-
-
-
-
-
-void TileMap::updateMap(sf::RenderWindow* window)
-{
-    //User Controls ----------------------------------------------------------------------------------
-
-    updateUserInput(window);
-    //Update All Tile Physics -----------------------------------------------------------------------
-
-    updateWaterTilePhysics(window);
-
-    updateFireTilePhysics(window);
-    
-    updateSandTilePhysics(window);
-    
-}
-
-
-
-
 
 void TileMap::drawWaterTiles(sf::RenderWindow* window) {
 
@@ -548,6 +476,24 @@ void TileMap::drawFireTiles(sf::RenderWindow* window) {
     }
 
 }
+
+void TileMap::updateMap(sf::RenderWindow* window)
+{
+    //User Controls ----------------------------------------------------------------------------------
+
+    updateUserInput(window);
+
+    //Update All Tile Physics -----------------------------------------------------------------------
+
+    updateWaterTilePhysics(window);
+
+    updateFireTilePhysics(window);
+    
+    updateSandTilePhysics(window);
+    
+}
+
+
 
 
 void TileMap::drawMap(sf::RenderWindow* window)
