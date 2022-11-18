@@ -2,7 +2,5 @@
 
 WaterTile::WaterTile()
 {
-
 	tileColor = sf::Color::Blue;
-	
 }

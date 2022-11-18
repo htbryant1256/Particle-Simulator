@@ -22,6 +22,9 @@ public:
 	void updateSandTilePhysics(sf::RenderWindow* window);
 	void updateMap(sf::RenderWindow*);
 	void drawWaterTiles(sf::RenderWindow* window);
+	void drawSandTiles(sf::RenderWindow* window);
+	void drawBrickTiles(sf::RenderWindow* window);
+	void drawFireTiles(sf::RenderWindow* window);
 	void drawMap(sf::RenderWindow*);
 	int getTileSize();
 	int getMapWidth();

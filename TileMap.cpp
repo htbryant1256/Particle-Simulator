@@ -518,20 +518,7 @@ void TileMap::drawWaterTiles(sf::RenderWindow* window) {
 }
 
 
-
-
-
-
-
-
-
-
-
-void TileMap::drawMap(sf::RenderWindow* window)
-{
-
-    drawWaterTiles(window);
-
+void TileMap::drawSandTiles(sf::RenderWindow* window) {
     for (auto& element : sandVector) {
 
         element.tile.setPosition(sf::Vector2f(element.xCord * tile.getTileSize(), element.yCord * tile.getTileSize()));
@@ -539,7 +526,9 @@ void TileMap::drawMap(sf::RenderWindow* window)
         window->draw(element.tile);
 
     }
+}
 
+void TileMap::drawBrickTiles(sf::RenderWindow* window) {
     for (auto& element : brickVector) {
 
         element.tile.setPosition(sf::Vector2f(element.xCord * tile.getTileSize(), element.yCord * tile.getTileSize()));
@@ -547,6 +536,9 @@ void TileMap::drawMap(sf::RenderWindow* window)
         window->draw(element.tile);
 
     }
+}
+
+void TileMap::drawFireTiles(sf::RenderWindow* window) {
     for (auto& element : fireVector) {
 
         element.tile.setPosition(sf::Vector2f(element.xCord * tile.getTileSize(), element.yCord * tile.getTileSize()));
@@ -554,13 +546,20 @@ void TileMap::drawMap(sf::RenderWindow* window)
         window->draw(element.tile);
 
     }
-    window->draw(mouseCursor);
 
 }
 
 
+void TileMap::drawMap(sf::RenderWindow* window)
+{
+    drawWaterTiles(window);
+    drawSandTiles(window);
+    drawBrickTiles(window);
+    drawFireTiles(window);
 
+    window->draw(mouseCursor);
 
+}
 
 
 int TileMap::getTileSize()
