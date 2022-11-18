@@ -5,10 +5,12 @@ class FireTile : public Tile
 {
 public:
 
+	int deathCounter;
+
 	FireTile();
 
 private:
-
+	
 
 };
 

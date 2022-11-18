@@ -209,6 +209,11 @@ void TileMap::updateFireTilePhysics(sf::RenderWindow* window) {
     }
 
     //Fire Delete ------------------------------------------------------------
+
+
+    //Double For loop between deleteVector, and FireVector, to delete fire on a deathTimer. 
+
+
     if (finalCount != 0) {
         Tile temp;
         temp = fireVector.at((fireVector.size() - finalCount));
@@ -228,6 +233,12 @@ void TileMap::updateFireTilePhysics(sf::RenderWindow* window) {
         finalTile = false;
 
     }
+
+
+
+
+
+
 
     vectorCounter = 0;
     finalCount = 0;
@@ -317,8 +328,6 @@ void TileMap::updateFireTilePhysics(sf::RenderWindow* window) {
             sandVector.erase(sandVector.begin() + deleteSand);
         }
 
-
-
         if (fireSpread) {
             break;
         }
@@ -330,15 +339,12 @@ void TileMap::updateFireTilePhysics(sf::RenderWindow* window) {
         fireVector.push_back(tempFire);
     }
 
-
-
 }
 
 void TileMap::updateSandTilePhysics(sf::RenderWindow* window) {
 
     // Sand Tile Update Physics-----------------------------------------------------------------------------------------------------------------------------------
     for (auto& element : sandVector) {
-
 
         int x = element.xCord;
         int y = element.yCord;
@@ -366,7 +372,6 @@ void TileMap::updateSandTilePhysics(sf::RenderWindow* window) {
             element.yCord += 1;
 
         }
-
 
         else if (mapArray[x][y + 1] == '#') {
             for (auto& elementToCompare : waterVector) {
@@ -432,6 +437,7 @@ void TileMap::updateSandTilePhysics(sf::RenderWindow* window) {
 
 
 }
+
 
 void TileMap::drawWaterTiles(sf::RenderWindow* window) {
 

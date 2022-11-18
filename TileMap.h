@@ -45,6 +45,8 @@ private:
 	std::vector<BrickTile> brickVector;
 	std::vector<FireTile> fireVector;
 
+	std::vector<FireTile> deleteVector;
+
 	sf::RectangleShape mouseCursor;
 
 };

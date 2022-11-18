@@ -2,10 +2,8 @@
 
 FireTile::FireTile()
 {
-
+	deathCounter = 100;
 
 	tileColor = sf::Color::Red;
-
-
 
 }
