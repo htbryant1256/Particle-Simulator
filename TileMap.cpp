@@ -161,24 +161,7 @@ void TileMap::updateWaterTilePysics(sf::RenderWindow* window) {
     }
 
 }
-
-
-
-
-void TileMap::updateMap(sf::RenderWindow* window)
-{
-    //User Controls ----------------------------------------------------------------------------------
-
-    updateUserInput(window);
-
-
-    //Update All Tile Physics
-
-    // Update Water Tile Pysics
-    updateWaterTilePysics(window);
-
-
-
+void TileMap::updateFireTilePysics(sf::RenderWindow* window) {
     int vectorCounter = 0;
     int finalCount = 0;
 
@@ -190,7 +173,7 @@ void TileMap::updateMap(sf::RenderWindow* window)
 
 
         finalCount = vectorCounter;
-        
+
         vectorCounter++;
 
         if (mapArray[x][y + 1] == ' ') {
@@ -199,7 +182,7 @@ void TileMap::updateMap(sf::RenderWindow* window)
             element.yCord += 1;
         }
 
-        else if (mapArray[x - 1][y] == ' ' && mapArray[x + 1][y] == ' ' && rand()% 10 <= 1) {
+        else if (mapArray[x - 1][y] == ' ' && mapArray[x + 1][y] == ' ' && rand() % 10 <= 1) {
             if (rand() % 2 + 1 == 2) {
                 mapArray[x - 1][y] = 'F';
                 mapArray[x][y] = ' ';
@@ -232,17 +215,17 @@ void TileMap::updateMap(sf::RenderWindow* window)
             element.xCord -= 1;
 
         }
-        else if (mapArray[x + 1][y] == ' ' ) {
+        else if (mapArray[x + 1][y] == ' ') {
             mapArray[x + 1][y] = 'F';
             mapArray[x][y] = ' ';
             element.xCord += 1;
 
         }
-        
+
 
     }
 
-    
+
     //Fire Delete
     if (finalCount != 0) {
         Tile temp;
@@ -252,9 +235,9 @@ void TileMap::updateMap(sf::RenderWindow* window)
 
 
         finalTile = true;
-        
+
     }
-    else if(finalTile) {
+    else if (finalTile) {
 
         Tile temp;
         temp = fireVector.at(finalCount);
@@ -263,9 +246,29 @@ void TileMap::updateMap(sf::RenderWindow* window)
         finalTile = false;
 
     }
+}
+
+
+
+
+void TileMap::updateMap(sf::RenderWindow* window)
+{
+    //User Controls ----------------------------------------------------------------------------------
+
+    updateUserInput(window);
+
+
+    //Update All Tile Physics
+
+    // Update Water Tile Pysics
+    updateWaterTilePysics(window);
+
+
+    updateFireTilePysics(window);
     
-    vectorCounter = 0;
-    finalCount = 0;
+    
+    int vectorCounter = 0;
+    int finalCount = 0;
     // Sand Tile Update Physics-----------------------------------------------------------------------------------------------------------------------------------
     for (auto& element : sandVector) {
 

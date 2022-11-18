@@ -18,6 +18,7 @@ public:
 	void initMap();
 	void updateUserInput(sf::RenderWindow* window);
 	void updateWaterTilePysics(sf::RenderWindow* window);
+	void updateFireTilePysics(sf::RenderWindow* window);
 	void updateMap(sf::RenderWindow*);
 	void drawMap(sf::RenderWindow*);
 	int getTileSize();
