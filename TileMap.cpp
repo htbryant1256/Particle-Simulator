@@ -28,11 +28,7 @@ void TileMap::initMap()
     }
 }
 
-void TileMap::updateMap(sf::RenderWindow* window)
-{
-
-
-    //User Controls ----------------------------------------------------------------------------------
+void TileMap::updateUserInput(sf::RenderWindow* window) {
     int counter = 3;
 
     sf::Vector2f worldPos = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
@@ -42,8 +38,8 @@ void TileMap::updateMap(sf::RenderWindow* window)
     if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
         for (int i = counter; i >= 0; i--) {
             WaterTile tempTile;
-            tempTile.xCord = int((worldPos.x / tile.getTileSize()) + rand() % counter*2 - counter);
-            tempTile.yCord = int((worldPos.y / tile.getTileSize()) + rand() % counter*2 - counter);
+            tempTile.xCord = int((worldPos.x / tile.getTileSize()) + rand() % counter * 2 - counter);
+            tempTile.yCord = int((worldPos.y / tile.getTileSize()) + rand() % counter * 2 - counter);
 
             if (mapArray[tempTile.xCord][tempTile.yCord] == ' ') {
 
@@ -69,13 +65,13 @@ void TileMap::updateMap(sf::RenderWindow* window)
             }
         }
     }
-    
+
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
 
         for (int i = 20; i >= 0; i--) {
             BrickTile tempTile;
-            tempTile.xCord = int((worldPos.x / tile.getTileSize()) + rand() % counter- counter/2);
-            tempTile.yCord = int((worldPos.y / tile.getTileSize()) + rand() % counter- counter/2);
+            tempTile.xCord = int((worldPos.x / tile.getTileSize()) + rand() % counter - counter / 2);
+            tempTile.yCord = int((worldPos.y / tile.getTileSize()) + rand() % counter - counter / 2);
 
             if (mapArray[tempTile.xCord][tempTile.yCord] != 'B') {
 
@@ -100,6 +96,18 @@ void TileMap::updateMap(sf::RenderWindow* window)
             }
         }
     }
+
+}
+
+
+
+
+
+void TileMap::updateMap(sf::RenderWindow* window)
+{
+
+    updateUserInput(window);
+
 
     //Update All Tile Physics
 

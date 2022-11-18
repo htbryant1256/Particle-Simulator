@@ -7,7 +7,7 @@ int Tile::getTileSize()
 
 Tile::Tile()
 {
-	tileSize = 2;
+	tileSize = 3;
 
 	xCord = 0;
 

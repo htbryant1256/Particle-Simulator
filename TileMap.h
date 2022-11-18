@@ -16,6 +16,7 @@ public:
 
 	TileMap();
 	void initMap();
+	void updateUserInput(sf::RenderWindow* window);
 	void updateMap(sf::RenderWindow*);
 	void drawMap(sf::RenderWindow*);
 	int getTileSize();
