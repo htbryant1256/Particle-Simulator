@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <cstdlib>
 
-//Private Functions---------------------------------------------------------------------------------
+//Private Functions----------------------------------------------------------------------------------
 void Game::initVariables()
 {
 	window = nullptr;
