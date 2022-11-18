@@ -17,9 +17,11 @@ public:
 	TileMap();
 	void initMap();
 	void updateUserInput(sf::RenderWindow* window);
-	void updateWaterTilePysics(sf::RenderWindow* window);
-	void updateFireTilePysics(sf::RenderWindow* window);
+	void updateWaterTilePhysics(sf::RenderWindow* window);
+	void updateFireTilePhysics(sf::RenderWindow* window);
+	void updateSandTilePhysics(sf::RenderWindow* window);
 	void updateMap(sf::RenderWindow*);
+	void drawWaterTiles(sf::RenderWindow* window);
 	void drawMap(sf::RenderWindow*);
 	int getTileSize();
 	int getMapWidth();

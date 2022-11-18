@@ -99,7 +99,7 @@ void TileMap::updateUserInput(sf::RenderWindow* window) {
 
 }
 
-void TileMap::updateWaterTilePysics(sf::RenderWindow* window) {
+void TileMap::updateWaterTilePhysics(sf::RenderWindow* window) {
 
     int vectorCounter = 0;
     int finalCount = 0;
@@ -150,18 +150,9 @@ void TileMap::updateWaterTilePysics(sf::RenderWindow* window) {
         }
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-        if (finalCount != 0) {
-            Tile temp;
-            temp = waterVector.at(finalCount);
-            mapArray[temp.xCord][temp.yCord] = ' ';
-            waterVector.erase(waterVector.begin() + finalCount);
-
-        }
-    }
-
 }
-void TileMap::updateFireTilePysics(sf::RenderWindow* window) {
+
+void TileMap::updateFireTilePhysics(sf::RenderWindow* window) {
     int vectorCounter = 0;
     int finalCount = 0;
 
@@ -246,155 +237,10 @@ void TileMap::updateFireTilePysics(sf::RenderWindow* window) {
         finalTile = false;
 
     }
-}
-
-
-
-
-void TileMap::updateMap(sf::RenderWindow* window)
-{
-    //User Controls ----------------------------------------------------------------------------------
-
-    updateUserInput(window);
-
-
-    //Update All Tile Physics
-
-    // Update Water Tile Pysics
-    updateWaterTilePysics(window);
-
-
-    updateFireTilePysics(window);
-    
-    
-    int vectorCounter = 0;
-    int finalCount = 0;
-    // Sand Tile Update Physics-----------------------------------------------------------------------------------------------------------------------------------
-    for (auto& element : sandVector) {
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && mouseCursor.getGlobalBounds().contains(sf::Vector2f(element.xCord * tile.getTileSize(), element.yCord * tile.getTileSize()))) {
-            finalCount = vectorCounter;
-
-        }
-
-        vectorCounter++;
-
-        int x = element.xCord;
-        int y = element.yCord;
-
-        if (mapArray[x][y + 1] == ' ') {
-            mapArray[x][y + 1] = 'S';
-            mapArray[x][y] = ' ';
-
-            element.yCord += 1;
-
-        }
-        else if (mapArray[x - 1][y + 1] == ' ' && mapArray[x][y + 1] != 'B') {
-
-                mapArray[x - 1][y + 1] = 'S';
-                mapArray[x][y] = ' ';
-                element.xCord -= 1;
-                element.yCord += 1;
-            
-        }
-        else if (mapArray[x + 1][y + 1] == ' ' && mapArray[x][y + 1] != 'B') {
-
-                mapArray[x + 1][y + 1] = 'S';
-                mapArray[x][y] = ' ';
-                element.xCord += 1;
-                element.yCord += 1;
-            
-        }
-        
-        
-        else if (mapArray[x][y + 1] == '#') {
-            for (auto& elementToCompare : waterVector) {
-                if (elementToCompare.xCord == x && elementToCompare.yCord == y + 1) {
-
-                    mapArray[x][y + 1] = 'S';
-                    mapArray[x][y] = '#';
-                    elementToCompare.yCord = y;
-                    element.yCord += 1;
-
-                    break;
-                }
-
-            }
-
-        }
-        
-        else if (mapArray[x - 1][y + 1] == '#') {
-
-            for (auto& elementToCompare : waterVector) {
-                if (elementToCompare.xCord == x - 1 && elementToCompare.yCord == y + 1) {
-                    mapArray[x - 1][y + 1] = 'S';
-                    mapArray[x][y] = '#';
-                    elementToCompare.yCord = y;
-                    elementToCompare.xCord = x;
-
-                    element.yCord += 1;
-                    element.xCord -= 1;
-
-                    break;
-                }
-
-
-
-            }
-
-
-        }
-        else if (mapArray[x + 1][y + 1] == '#') {
-
-            for (auto& elementToCompare : waterVector) {
-                if (elementToCompare.xCord == x + 1 && elementToCompare.yCord == y + 1) {
-                    mapArray[x + 1][y + 1] = 'S';
-                    mapArray[x][y] = '#';
-                    elementToCompare.yCord = y;
-                    elementToCompare.xCord = x;
-
-                    element.yCord += 1;
-                    element.xCord += 1;
-
-                    break;
-                }
-
-
-
-            }
-
-
-        }
-
-        
-    }
-    
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-        if (finalCount != 0) {
-            Tile temp;
-            temp = sandVector.at(finalCount);
-            mapArray[temp.xCord][temp.yCord] = ' ';
-            sandVector.erase(sandVector.begin() + finalCount);
-
-        }
-    }
 
     vectorCounter = 0;
     finalCount = 0;
-    // Brick Tile Update Physics-----------------------------------------------------------------------------------------------------------------------------------
 
-    for (auto& element : brickVector) {
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && mouseCursor.getGlobalBounds().contains(sf::Vector2f(element.xCord * tile.getTileSize(), element.yCord * tile.getTileSize()))) {
-            finalCount = vectorCounter;
-
-        }
-
-        vectorCounter++;
-      
-    }
-    vectorCounter = 0;
-    finalCount = 0;
 
 
     FireTile tempFire;
@@ -512,28 +358,179 @@ void TileMap::updateMap(sf::RenderWindow* window)
         fireVector.push_back(tempFire);
     }
 
-   
+
+
+}
+
+void TileMap::updateSandTilePhysics(sf::RenderWindow* window) {
+    int vectorCounter = 0;
+    int finalCount = 0;
+    // Sand Tile Update Physics-----------------------------------------------------------------------------------------------------------------------------------
+    for (auto& element : sandVector) {
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && mouseCursor.getGlobalBounds().contains(sf::Vector2f(element.xCord * tile.getTileSize(), element.yCord * tile.getTileSize()))) {
+            finalCount = vectorCounter;
+
+        }
+
+        vectorCounter++;
+
+        int x = element.xCord;
+        int y = element.yCord;
+
+        if (mapArray[x][y + 1] == ' ') {
+            mapArray[x][y + 1] = 'S';
+            mapArray[x][y] = ' ';
+
+            element.yCord += 1;
+
+        }
+        else if (mapArray[x - 1][y + 1] == ' ' && mapArray[x][y + 1] != 'B') {
+
+            mapArray[x - 1][y + 1] = 'S';
+            mapArray[x][y] = ' ';
+            element.xCord -= 1;
+            element.yCord += 1;
+
+        }
+        else if (mapArray[x + 1][y + 1] == ' ' && mapArray[x][y + 1] != 'B') {
+
+            mapArray[x + 1][y + 1] = 'S';
+            mapArray[x][y] = ' ';
+            element.xCord += 1;
+            element.yCord += 1;
+
+        }
+
+
+        else if (mapArray[x][y + 1] == '#') {
+            for (auto& elementToCompare : waterVector) {
+                if (elementToCompare.xCord == x && elementToCompare.yCord == y + 1) {
+
+                    mapArray[x][y + 1] = 'S';
+                    mapArray[x][y] = '#';
+                    elementToCompare.yCord = y;
+                    element.yCord += 1;
+
+                    break;
+                }
+
+            }
+
+        }
+
+        else if (mapArray[x - 1][y + 1] == '#') {
+
+            for (auto& elementToCompare : waterVector) {
+                if (elementToCompare.xCord == x - 1 && elementToCompare.yCord == y + 1) {
+                    mapArray[x - 1][y + 1] = 'S';
+                    mapArray[x][y] = '#';
+                    elementToCompare.yCord = y;
+                    elementToCompare.xCord = x;
+
+                    element.yCord += 1;
+                    element.xCord -= 1;
+
+                    break;
+                }
+
+
+
+            }
+
+
+        }
+        else if (mapArray[x + 1][y + 1] == '#') {
+
+            for (auto& elementToCompare : waterVector) {
+                if (elementToCompare.xCord == x + 1 && elementToCompare.yCord == y + 1) {
+                    mapArray[x + 1][y + 1] = 'S';
+                    mapArray[x][y] = '#';
+                    elementToCompare.yCord = y;
+                    elementToCompare.xCord = x;
+
+                    element.yCord += 1;
+                    element.xCord += 1;
+
+                    break;
+                }
+
+
+
+            }
+
+
+        }
+
+
+    }
+
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
         if (finalCount != 0) {
             Tile temp;
-            temp = brickVector.at(finalCount);
+            temp = sandVector.at(finalCount);
             mapArray[temp.xCord][temp.yCord] = ' ';
-            brickVector.erase(brickVector.begin() + finalCount);
+            sandVector.erase(sandVector.begin() + finalCount);
 
         }
     }
 }
 
-void TileMap::drawMap(sf::RenderWindow* window)
+
+
+
+
+
+
+
+
+
+
+void TileMap::updateMap(sf::RenderWindow* window)
 {
+    //User Controls ----------------------------------------------------------------------------------
+
+    updateUserInput(window);
+    //Update All Tile Physics -----------------------------------------------------------------------
+
+    updateWaterTilePhysics(window);
+
+    updateFireTilePhysics(window);
+    
+    updateSandTilePhysics(window);
+    
+}
+
+
+
+
+
+void TileMap::drawWaterTiles(sf::RenderWindow* window) {
 
     for (auto& element : waterVector) {
-        
+
         element.tile.setPosition(sf::Vector2f(element.xCord * tile.getTileSize(), element.yCord * tile.getTileSize()));
         element.tile.setFillColor(element.tileColor);
         window->draw(element.tile);
 
     }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+void TileMap::drawMap(sf::RenderWindow* window)
+{
+
+    drawWaterTiles(window);
 
     for (auto& element : sandVector) {
 
@@ -560,6 +557,11 @@ void TileMap::drawMap(sf::RenderWindow* window)
     window->draw(mouseCursor);
 
 }
+
+
+
+
+
 
 int TileMap::getTileSize()
 {
