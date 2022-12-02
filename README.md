@@ -3,7 +3,7 @@
 Controls:
   Left click = draw Sand.
   Right Click = draw water.
-
+  'F' = draw fire.
 
 DEMO:
 
