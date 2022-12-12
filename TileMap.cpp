@@ -111,7 +111,7 @@ void TileMap::updateWaterTilePhysics(sf::RenderWindow* window) {
             element.yCord += 1;
         }
 
-        else if (mapArray[x - 1][y] == ' ' && mapArray[x + 1][y] == ' ') {
+        else if (tileCanMoveLeft(element) && tileCanMoveRight(element)) {
             if (rand() % 2 + 1 == 2) {
                 mapArray[x - 1][y] = '#';
                 mapArray[x][y] = ' ';
@@ -124,13 +124,13 @@ void TileMap::updateWaterTilePhysics(sf::RenderWindow* window) {
             }
 
         }
-        else if (mapArray[x - 1][y] == ' ') {
+        else if (tileCanMoveLeft(element)) {
             mapArray[x - 1][y] = '#';
             mapArray[x][y] = ' ';
             element.xCord -= 1;
 
         }
-        else if (mapArray[x + 1][y] == ' ') {
+        else if (tileCanMoveRight(element)) {
             mapArray[x + 1][y] = '#';
             mapArray[x][y] = ' ';
             element.xCord += 1;
@@ -157,7 +157,7 @@ void TileMap::updateFireTilePhysics(sf::RenderWindow* window) {
             element.yCord += 1;
         }
 
-        else if (mapArray[x - 1][y] == ' ' && mapArray[x + 1][y] == ' ' && rand() % 10 <= 1) {
+        else if (tileCanMoveLeft(element) && tileCanMoveRight(element) && rand() % 10 <= 1) {
             if (rand() % 2 + 1 == 2) {
                 mapArray[x - 1][y] = 'F';
                 mapArray[x][y] = ' ';
@@ -184,13 +184,13 @@ void TileMap::updateFireTilePhysics(sf::RenderWindow* window) {
             element.yCord -= 1;
 
         }
-        else if (mapArray[x - 1][y] == ' ') {
+        else if (tileCanMoveLeft(element)) {
             mapArray[x - 1][y] = 'F';
             mapArray[x][y] = ' ';
             element.xCord -= 1;
 
         }
-        else if (mapArray[x + 1][y] == ' ') {
+        else if (tileCanMoveRight(element)) {
             mapArray[x + 1][y] = 'F';
             mapArray[x][y] = ' ';
             element.xCord += 1;
@@ -405,6 +405,18 @@ void TileMap::updateSandTilePhysics(sf::RenderWindow* window) {
 bool TileMap::tileIsFalling(Tile elementTile) {
     
     return mapArray[elementTile.xCord][elementTile.yCord + 1] == ' ';
+
+}
+
+bool TileMap::tileCanMoveLeft(Tile elementTile) {
+
+    return mapArray[elementTile.xCord - 1][elementTile.yCord] == ' ';
+
+}
+
+bool TileMap::tileCanMoveRight(Tile elementTile) {
+
+    return mapArray[elementTile.xCord + 1][elementTile.yCord] == ' ';
 
 }
 
