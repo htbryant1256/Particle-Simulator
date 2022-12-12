@@ -105,7 +105,7 @@ void TileMap::updateWaterTilePhysics(sf::RenderWindow* window) {
         int x = element.xCord;
         int y = element.yCord;
 
-        if (tileIsFalling(element)) {
+        if (tileCanMoveDown(element)) {
             mapArray[x][y + 1] = '#';
             mapArray[x][y] = ' ';
             element.yCord += 1;
@@ -151,7 +151,7 @@ void TileMap::updateFireTilePhysics(sf::RenderWindow* window) {
 
         vectorCounter++;
 
-        if (tileIsFalling(element)) {
+        if (tileCanMoveDown(element)) {
             mapArray[x][y + 1] = 'F';
             mapArray[x][y] = ' ';
             element.yCord += 1;
@@ -323,7 +323,7 @@ void TileMap::updateSandTilePhysics(sf::RenderWindow* window) {
         int x = element.xCord;
         int y = element.yCord;
 
-        if (tileIsFalling(element)) {
+        if (tileCanMoveDown(element)) {
             mapArray[x][y + 1] = 'S';
             mapArray[x][y] = ' ';
 
@@ -395,7 +395,7 @@ void TileMap::updateSandTilePhysics(sf::RenderWindow* window) {
 }
 
 
-bool TileMap::tileIsFalling(Tile elementTile) {
+bool TileMap::tileCanMoveDown(Tile elementTile) {
     
     return mapArray[elementTile.xCord][elementTile.yCord + 1] == ' ';
 
@@ -412,6 +412,10 @@ bool TileMap::tileCanMoveRight(Tile elementTile) {
     return mapArray[elementTile.xCord + 1][elementTile.yCord] == ' ';
 
 }
+
+
+
+
 
 void TileMap::drawWaterTiles(sf::RenderWindow* window) {
 

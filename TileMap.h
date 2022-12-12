@@ -21,7 +21,7 @@ public:
 	void updateFireTilePhysics(sf::RenderWindow* window);
 	void updateSandTilePhysics(sf::RenderWindow* window);
 	void updateMap(sf::RenderWindow*);
-	bool tileIsFalling(Tile elementTile);
+	bool tileCanMoveDown(Tile elementTile);
 	bool tileCanMoveLeft(Tile elementTile);
 	bool tileCanMoveRight(Tile elementTile);
 	void drawWaterTiles(sf::RenderWindow* window);
