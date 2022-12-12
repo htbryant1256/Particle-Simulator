@@ -171,13 +171,6 @@ void TileMap::updateFireTilePhysics(sf::RenderWindow* window) {
 
             }
         }
-        /* REMOVE THIS STATEMENT, IT IS REDUNDANT*/
-        else if (mapArray[x][y + 1] == ' ') {
-            mapArray[x][y + 1] = 'F';
-            mapArray[x][y] = ' ';
-            element.yCord += 1;
-
-        }
         else if (mapArray[x][y - 1] == ' ') {
             mapArray[x][y - 1] = 'F';
             mapArray[x][y] = ' ';
