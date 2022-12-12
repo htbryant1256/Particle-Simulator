@@ -2,7 +2,7 @@
 
 void TileMap::initMap()
 {
-    mouseCursor.setSize(sf::Vector2f(tile.getTileSize(), tile.getTileSize()));
+    mouseCursor.setSize(sf::Vector2f(tile.getTileSize()*2, tile.getTileSize()*2));
     mouseCursor.setFillColor(sf::Color::Red);
 
     int rows = sizeof(mapArray) / sizeof(mapArray[0]);
@@ -101,15 +101,11 @@ void TileMap::updateUserInput(sf::RenderWindow* window) {
 
 void TileMap::updateWaterTilePhysics(sf::RenderWindow* window) {
 
-
-    // Water Tile Update Physics-----------------------------------------------------------------------------------------------------------------------------------
     for (auto& element : waterVector) {
         int x = element.xCord;
         int y = element.yCord;
 
-
-
-        if (mapArray[x][y + 1] == ' ') {
+        if (tileIsFalling(element)) {
             mapArray[x][y + 1] = '#';
             mapArray[x][y] = ' ';
             element.yCord += 1;
@@ -120,13 +116,11 @@ void TileMap::updateWaterTilePhysics(sf::RenderWindow* window) {
                 mapArray[x - 1][y] = '#';
                 mapArray[x][y] = ' ';
                 element.xCord--;
-
             }
             else {
                 mapArray[x + 1][y] = '#';
                 mapArray[x][y] = ' ';
                 element.xCord++;
-
             }
 
         }
@@ -143,24 +137,21 @@ void TileMap::updateWaterTilePhysics(sf::RenderWindow* window) {
 
         }
     }
-
 }
 
 void TileMap::updateFireTilePhysics(sf::RenderWindow* window) {
     int vectorCounter = 0;
     int finalCount = 0;
 
-    // Fire Tile Update Physics-----------------------------------------------------------------------------------------------------------------------------------
     for (auto& element : fireVector) {
         int x = element.xCord;
         int y = element.yCord;
-
 
         finalCount = vectorCounter;
 
         vectorCounter++;
 
-        if (mapArray[x][y + 1] == ' ') {
+        if (tileIsFalling(element)) {
             mapArray[x][y + 1] = 'F';
             mapArray[x][y] = ' ';
             element.yCord += 1;
@@ -179,8 +170,8 @@ void TileMap::updateFireTilePhysics(sf::RenderWindow* window) {
                 element.xCord++;
 
             }
-
         }
+        /* REMOVE THIS STATEMENT, IT IS REDUNDANT*/
         else if (mapArray[x][y + 1] == ' ') {
             mapArray[x][y + 1] = 'F';
             mapArray[x][y] = ' ';
@@ -211,9 +202,6 @@ void TileMap::updateFireTilePhysics(sf::RenderWindow* window) {
     //Fire Delete ------------------------------------------------------------
 
 
-    //Double For loop between deleteVector, and FireVector, to delete fire on a deathTimer. 
-
-
     if (finalCount != 0) {
         Tile temp;
         temp = fireVector.at((fireVector.size() - finalCount));
@@ -233,12 +221,6 @@ void TileMap::updateFireTilePhysics(sf::RenderWindow* window) {
         finalTile = false;
 
     }
-
-
-
-
-
-
 
     vectorCounter = 0;
     finalCount = 0;
@@ -343,13 +325,12 @@ void TileMap::updateFireTilePhysics(sf::RenderWindow* window) {
 
 void TileMap::updateSandTilePhysics(sf::RenderWindow* window) {
 
-    // Sand Tile Update Physics-----------------------------------------------------------------------------------------------------------------------------------
     for (auto& element : sandVector) {
 
         int x = element.xCord;
         int y = element.yCord;
 
-        if (mapArray[x][y + 1] == ' ') {
+        if (tileIsFalling(element)) {
             mapArray[x][y + 1] = 'S';
             mapArray[x][y] = ' ';
 
@@ -372,7 +353,6 @@ void TileMap::updateSandTilePhysics(sf::RenderWindow* window) {
             element.yCord += 1;
 
         }
-
         else if (mapArray[x][y + 1] == '#') {
             for (auto& elementToCompare : waterVector) {
                 if (elementToCompare.xCord == x && elementToCompare.yCord == y + 1) {
@@ -384,11 +364,8 @@ void TileMap::updateSandTilePhysics(sf::RenderWindow* window) {
 
                     break;
                 }
-
             }
-
         }
-
         else if (mapArray[x - 1][y + 1] == '#') {
 
             for (auto& elementToCompare : waterVector) {
@@ -403,12 +380,7 @@ void TileMap::updateSandTilePhysics(sf::RenderWindow* window) {
 
                     break;
                 }
-
-
-
             }
-
-
         }
         else if (mapArray[x + 1][y + 1] == '#') {
 
@@ -424,20 +396,17 @@ void TileMap::updateSandTilePhysics(sf::RenderWindow* window) {
 
                     break;
                 }
-
-
-
             }
-
-
         }
-
-
     }
-
-
 }
 
+
+bool TileMap::tileIsFalling(Tile elementTile) {
+    
+    return mapArray[elementTile.xCord][elementTile.yCord + 1] == ' ';
+
+}
 
 void TileMap::drawWaterTiles(sf::RenderWindow* window) {
 
@@ -448,7 +417,6 @@ void TileMap::drawWaterTiles(sf::RenderWindow* window) {
         window->draw(element.tile);
 
     }
-
 }
 
 
@@ -485,16 +453,10 @@ void TileMap::drawFireTiles(sf::RenderWindow* window) {
 
 void TileMap::updateMap(sf::RenderWindow* window)
 {
-    //User Controls ----------------------------------------------------------------------------------
-
     updateUserInput(window);
 
-    //Update All Tile Physics -----------------------------------------------------------------------
-
     updateWaterTilePhysics(window);
-
     updateFireTilePhysics(window);
-    
     updateSandTilePhysics(window);
     
 }
@@ -510,7 +472,6 @@ void TileMap::drawMap(sf::RenderWindow* window)
     drawFireTiles(window);
 
     window->draw(mouseCursor);
-
 }
 
 
