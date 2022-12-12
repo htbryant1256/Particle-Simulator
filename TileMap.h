@@ -24,6 +24,8 @@ public:
 	bool tileCanMoveDown(Tile elementTile);
 	bool tileCanMoveLeft(Tile elementTile);
 	bool tileCanMoveRight(Tile elementTile);
+	bool tileCanMoveDownLeft(Tile elementTile);
+	bool tileCanMoveDownRight(Tile elementTile);
 	void drawWaterTiles(sf::RenderWindow* window);
 	void drawSandTiles(sf::RenderWindow* window);
 	void drawBrickTiles(sf::RenderWindow* window);

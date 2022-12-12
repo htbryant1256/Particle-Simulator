@@ -330,7 +330,7 @@ void TileMap::updateSandTilePhysics(sf::RenderWindow* window) {
             element.yCord += 1;
 
         }
-        else if (mapArray[x - 1][y + 1] == ' ' && mapArray[x][y + 1] != 'B') {
+        else if (tileCanMoveDownLeft(element) && mapArray[x][y + 1] != 'B') {
 
             mapArray[x - 1][y + 1] = 'S';
             mapArray[x][y] = ' ';
@@ -338,7 +338,7 @@ void TileMap::updateSandTilePhysics(sf::RenderWindow* window) {
             element.yCord += 1;
 
         }
-        else if (mapArray[x + 1][y + 1] == ' ' && mapArray[x][y + 1] != 'B') {
+        else if (tileCanMoveDownRight(element) && mapArray[x][y + 1] != 'B') {
 
             mapArray[x + 1][y + 1] = 'S';
             mapArray[x][y] = ' ';
@@ -413,8 +413,16 @@ bool TileMap::tileCanMoveRight(Tile elementTile) {
 
 }
 
+bool TileMap::tileCanMoveDownLeft(Tile elementTile) {
 
+    return mapArray[elementTile.xCord - 1][elementTile.yCord + 1] == ' ';
 
+}
+bool TileMap::tileCanMoveDownRight(Tile elementTile) {
+
+    return mapArray[elementTile.xCord + 1][elementTile.yCord + 1] == ' ';
+
+}
 
 
 void TileMap::drawWaterTiles(sf::RenderWindow* window) {
